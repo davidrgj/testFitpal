@@ -1,0 +1,32 @@
+/*
+ * Component icons
+ */
+
+.component-icon {
+    border-radius: 25%;
+    padding: 5px;
+    height: 20px;
+    width: 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.component-icon-dark {
+    background: var(--ion-color-step-850, #27323e);
+    color: var(--ion-item-background, #fff);
+}
+
+.component-icon-primary {
+    background: var(--ion-color-primary);
+    color: #fff;
+}
+
+.component-icon-success {
+    background: var(--ion-color-success);
+    color: #fff;
+}
+
+.component-icon-warning {
+    background: var(--ion-color-warning);
+    color: #fff;
+}

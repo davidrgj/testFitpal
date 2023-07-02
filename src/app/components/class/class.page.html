@@ -1,0 +1,57 @@
+<ion-app mode="ios">
+  <ion-header [translucent]="showHeaderTitle" [ngClass]="{'ion-no-boder': showHeaderTitle}" collapse="fade">
+    <ion-toolbar>
+      <div *ngIf="showHeaderTitle">
+        <ion-title>Clases</ion-title>
+      </div>
+      <ion-buttons slot="end">
+        <ion-button class="cart-element" (click)="loadClasses()">
+          <ion-icon name="reload"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content fullscreen [scrollEvents]="true" (ionScroll)="onScroll($event)" scrollable>
+    <div class="content-full-page">
+      <h1 class="global-titles ion-padding-horizontal ion-no-margin">
+        Clases
+      </h1>
+
+      <div class="ion-padding">
+        <p>Bienvenido a las clases, podrá crear una clase personalizada, actualizarla y eliminarla.</p>
+
+        <ion-card *ngFor="let classData of classes">
+          <div class="color-class" [ngStyle]="{'background': classData?.color ?? 'blue'}"></div>
+          <ion-card-content style="padding: 5px 20px 5px 25px;">
+            <ion-grid>
+              <ion-row>
+                <ion-col size="10">
+                  <h2>{{ classData.name }}</h2>
+                  <p>{{ classData.description }}</p>
+                </ion-col>
+                <ion-col size="2" class="ion-margin-vertical-auto">
+                  <ion-icon name="pencil" color="primary" class="" (click)="editClass(classData)"></ion-icon>
+                  <ion-icon name="trash" color="danger" class="" (click)="deleteClass(classData.id)"></ion-icon>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+
+        <div *ngIf="classes?.length === 0" class="ion-align-items-center ion-justify-content-center"
+          style="display:flex; height: 55vh;">
+          <p class="ion-padding">
+            Aún no hay clases por mostrar, por favor cree una en el botón inferior derecha.
+          </p>
+        </div>
+
+
+        <ion-fab slot="fixed" horizontal="end" vertical="bottom" style="position: fixed;">
+          <ion-fab-button id="form-modal" (click)="createClass()">
+            <ion-icon name="add"></ion-icon>
+          </ion-fab-button>
+        </ion-fab>
+      </div>
+    </div>
+  </ion-content>
+</ion-app>

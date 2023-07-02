@@ -1,0 +1,45 @@
+<ion-app mode="ios">
+  <ion-header [translucent]="showHeaderTitle" [ngClass]="{'ion-no-boder': showHeaderTitle}" collapse="fade">
+    <ion-toolbar>
+      <div *ngIf="showHeaderTitle">
+        <ion-title>Menú</ion-title>
+      </div>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content fullscreen [scrollEvents]="true" (ionScroll)="onScroll($event)" scrollable>
+    <div class="content-full-page">
+      <h1 class="global-titles ion-padding-horizontal ion-no-margin">
+        Menú
+      </h1>
+      <div class="ion-padding">
+        <div>
+          <div class="ion-text-center">
+            <ion-list class="theme-list" lines="full">
+              <ion-list-header>Personalización</ion-list-header>
+              <ion-item>
+                <ion-icon slot="start" icon="moon" class="component-icon component-icon-dark"></ion-icon>
+                <ion-label>
+                  Modo oscuro
+                </ion-label>
+                <ion-toggle slot="end" (ionChange)="changeTheme($event)" color="success" [checked]="isDarkMode">
+                </ion-toggle>
+              </ion-item>
+            </ion-list>
+            <br><br>
+            <ion-list>
+              <ion-list-header>Otros</ion-list-header>
+              <ion-item button (click)="takePhoto()">
+                <ion-icon class="component-icon component-icon-warning" slot="start" name="camera"></ion-icon>
+                <ion-label>
+                  Cámara
+                </ion-label>
+              </ion-item>
+              <ion-img *ngIf="photo" [src]="photo"></ion-img>
+            </ion-list>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </ion-content>
+</ion-app>

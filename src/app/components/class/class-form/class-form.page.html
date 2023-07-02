@@ -1,0 +1,49 @@
+<ion-header translucent mode="ios">
+    <ion-toolbar>
+        <ion-title>Clase</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="dismissModal()">Cerrar</ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content fullscreen mode="ios">
+    <ion-text>
+        <p class="ion-padding">
+            Ingresa toda la información correctamente para continuar el proceso para guardar la
+            clase.
+        </p>
+    </ion-text>
+    <div class="ion-padding ion-margin-vertical" style="padding-top: 0px;">
+        <form [formGroup]="classForm" (ngSubmit)="onSubmit()">
+            <ion-item fill="solid">
+                <ion-label position="floating">Nombre *</ion-label>
+                <ion-input formControlName="name" placeholder="Ingresa un nombre para la clase"></ion-input>
+            </ion-item><br>
+            <ion-item fill="solid">
+                <ion-label position="floating">Descripción *</ion-label>
+                <ion-textarea formControlName="description"
+                    placeholder="Ingresa una decripción de la clase"></ion-textarea>
+            </ion-item>
+            <ion-item>
+                <ion-label position="floating">Color *</ion-label>
+            </ion-item>
+            <ion-list>
+                <ion-item>
+                    <ion-select aria-label="colors" formControlName="color" interface="popover"
+                        placeholder="Selecciona un color">
+                        <ion-select-option value="Blue">Azul</ion-select-option>
+                        <ion-select-option value="Green">Verde</ion-select-option>
+                        <ion-select-option value="Red">Rojo</ion-select-option>
+                        <ion-select-option value="Yellow">Amarillo</ion-select-option>
+                    </ion-select>
+                </ion-item>
+            </ion-list>
+            <br>
+            <div class="ion-text-center">
+                <ion-button type="submit" fill="clear" [disabled]="!classForm.valid">
+                    Guardar
+                </ion-button>
+            </div>
+        </form>
+    </div>
+</ion-content>

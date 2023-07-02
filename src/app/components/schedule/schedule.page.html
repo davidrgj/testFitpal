@@ -1,0 +1,77 @@
+<ion-app mode="ios">
+  <ion-header [translucent]="showHeaderTitle" [ngClass]="{'ion-no-boder': showHeaderTitle}" collapse="fade">
+    <ion-toolbar>
+      <div *ngIf="showHeaderTitle">
+        <ion-title>Horario</ion-title>
+      </div>
+      <ion-buttons slot="end">
+        <ion-button class="cart-element" (click)="loadSchedules()">
+          <ion-icon name="reload"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content fullscreen [scrollEvents]="true" (ionScroll)="onScroll($event)" scrollable>
+    <div class="content-full-page">
+      <h1 class="global-titles ion-padding-horizontal ion-no-margin">
+        Horario
+      </h1>
+
+      <form [formGroup]="scheduleForm" (ngSubmit)="onSubmit()">
+        <div class="ion-padding">
+          <p>Bienvenido al horario. Podrá seleccionar la clase, día y horario disponible.</p>
+          <ion-list>
+            <ion-item>
+              <ion-select aria-label="Clases" placeholder="Seleccione la clase" formControlName="class_id">
+                <ion-select-option *ngIf="!classes?.length" disabled>
+                  No hay clases, por favor crea una
+                </ion-select-option>
+                <ion-select-option *ngFor="let class of classes" [value]="class?.id">
+                  {{ class?.name }}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-list>
+        </div>
+        <div class="margin-auto calendar-schedule">
+          <ion-datetime [min]="formatDateMinMaxCalendar(now)" formControlName="date" class="margin-auto">
+            <span slot="title">Fecha seleccionada</span>
+            <span slot="time-label">Hora</span>
+          </ion-datetime>
+
+          <ion-toolbar color="translucent">
+            <ion-buttons slot="start">
+              <ion-button color="danger" (click)="scheduleForm.reset()">Restablecer</ion-button>
+            </ion-buttons>
+            <ion-buttons slot="end">
+              <ion-button color="primary" type="submit" [disabled]="scheduleForm.invalid">Guardar</ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </div>
+      </form>
+
+      <ion-list>
+        <ion-item *ngFor="let schedule of schedules">
+          <ion-grid>
+            <ion-row>
+              <ion-col size="5">
+                <ion-label class="class-name">{{ getClassName(schedule.class_id) }}</ion-label>
+              </ion-col>
+              <ion-col size="5">
+                <ion-label class="schedule-date">{{ formatDate(schedule.date) }}</ion-label>
+              </ion-col>
+
+              <ion-col size="2" class="ion-text-end ion-margin-vertical-auto">
+                <ion-icon name="pencil" color="primary" class="" (click)="editSchedule(schedule)"></ion-icon>
+                <ion-icon name="trash" color="danger" class="" (click)="deleteSchedule(schedule.id)"></ion-icon>
+              </ion-col>
+
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+      </ion-list>
+
+
+    </div>
+  </ion-content>
+</ion-app>

@@ -1,0 +1,105 @@
+<ion-app mode="ios">
+  <ion-header [translucent]="showHeaderTitle" [ngClass]="{'ion-no-boder': showHeaderTitle}" collapse="fade">
+    <ion-toolbar>
+      <div *ngIf="showHeaderTitle">
+        <ion-title>Programación</ion-title>
+      </div>
+      <ion-buttons slot="end">
+        <ion-button class="cart-element">
+          <ion-icon name="reload"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content fullscreen [scrollEvents]="true" (ionScroll)="onScroll($event)" scrollable>
+    <div class="content-full-page">
+      <h1 class="global-titles ion-padding-horizontal ion-no-margin">
+        Programación
+      </h1>
+
+      <div class="ion-padding">
+        <div class="content-full-page">
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Hoy</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-list>
+                <ion-item *ngFor="let class of todayClasses" [ngClass]="{'execued-class': isClassExecuted(class) }">
+                  <div class="color-class" [ngStyle]="{'background': class?.color ?? 'blue'}"></div>
+                  <div style="margin: 5px 20px 5px 25px;">
+                    <ion-label text-wrap>{{ class?.name }}</ion-label>
+                    <ion-label>{{ class?.schedule?.date | date: 'EEEE, MMMM d' }}</ion-label>
+                    <ion-label>{{ class?.schedule?.date | date: 'h:mm a' }}</ion-label>
+                  </div>
+                </ion-item>
+                <ion-item *ngIf="todayClasses.length === 0">
+                  <ion-label text-wrap>
+                    <i>Hoy no hay clases programadas</i>
+                  </ion-label>
+                </ion-item>
+              </ion-list>
+            </ion-card-content>
+          </ion-card>
+
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Próximos días</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-segment [(ngModel)]="nextDays">
+                <ion-segment-button *ngFor="let date of upcomingDates" [value]="date">
+                  {{ date | date: 'EEE, MMM d' }}
+                </ion-segment-button>
+              </ion-segment>
+
+              <div class="class-list">
+                <ion-list *ngIf="nextDays">
+                  <ng-container *ngFor="let class of getClassesByDate(nextDays)">
+                    <ion-item>
+                      <ion-label text-wrap>{{ class.name }}</ion-label>
+                      <ion-label>{{ class?.schedule?.date | date: 'EEEE, MMMM d' }}</ion-label>
+                      <ion-label>{{ class?.schedule?.date | date: 'h:mm a' }}</ion-label>
+                    </ion-item>
+                  </ng-container>
+                </ion-list>
+                <ion-item *ngIf="nextDays && getClassesByDate(nextDays).length === 0">
+                  <ion-label>
+                    <i>No hay clases para este día</i>
+                  </ion-label>
+                </ion-item>
+              </div>
+            </ion-card-content>
+          </ion-card>
+
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Seleccionar fecha</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-datetime [(ngModel)]="selectedDate" display-format="EEE, MMM d" presentation="date"
+                picker-format="MMM DD, YYYY" (click)="showClassesBySelectedDate()" class="margin-auto">
+                <span slot="title">Fecha seleccionada</span>
+              </ion-datetime>
+              <div class="class-list" *ngIf="selectedClasses.length > 0">
+                <ion-list>
+                  <ion-item *ngFor="let class of selectedClasses">
+                    <ion-label text-wrap>{{ class.name }}</ion-label>
+                    <ion-label>{{ class?.schedule?.date | date: 'EEEE, MMMM d' }}</ion-label>
+                    <ion-label>{{ class?.schedule?.date | date: 'h:mm a' }}</ion-label>
+                  </ion-item>
+                </ion-list>
+              </div>
+              <div class="ion-margin" *ngIf="selectedDate && selectedClasses.length == 0">
+                <ion-label>
+                  <i>No hay clases para este día</i>
+                </ion-label>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </div>
+
+      </div>
+    </div>
+  </ion-content>
+</ion-app>

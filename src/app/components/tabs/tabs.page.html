@@ -1,0 +1,29 @@
+<ion-tabs (ionTabsDidChange)="setCurrentTab($event)" mode="ios">
+  <ion-tab-bar slot="bottom" [translucent]="true">
+
+    <ion-tab-button tab="today">
+      <ion-icon [name]="current_tab == 'today' ? 'file-tray' : 'file-tray-outline'"
+        class="icon-padding-custom"></ion-icon>
+      <ion-label>Hoy</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="schedule">
+      <ion-icon [name]="current_tab == 'schedule' ? 'calendar' : 'calendar-outline'"></ion-icon>
+      <ion-label>Horario</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="class">
+      <ion-icon [name]="current_tab == 'class' ? 'layers' : 'layers-outline'" class="icon-padding-custom"></ion-icon>
+      <ion-label>Clases</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="menu">
+      <ion-icon [name]="current_tab == 'menu' ? 'ellipsis-horizontal' : 'ellipsis-horizontal-outline'"></ion-icon>
+      <ion-label>Más</ion-label>
+    </ion-tab-button>
+
+  </ion-tab-bar>
+
+
+
+</ion-tabs>
